@@ -1,0 +1,9 @@
+<div class="{{classPrefix}}-content">
+  <ul data-role="items">
+  {{#each items}}
+    <li data-role="item" class="{{../classPrefix}}-item">
+      {{#include parent=.. }}{{{label}}}{{/include}}
+    </li>
+  {{/each}}
+  </ul>
+</div>

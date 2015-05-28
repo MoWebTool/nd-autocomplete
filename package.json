@@ -16,19 +16,14 @@
     "url": "https://github.com/ndfront/nd-autocomplete/issues"
   },
   "licenses": "MIT",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-exec": "^0.4.6",
-    "grunt-jsdoc": "^0.5.7",
-    "grunt-spm-server": "^0.2.7",
-    "load-grunt-tasks": "^0.6.0"
-  },
+  "devDependencies": {},
   "spm": {
     "main": "index.js",
     "dependencies": {
-      "jquery": "1.11.1"
+      "jquery": "1.11.1",
+      "nd-base": "0.0.1",
+      "nd-overlay": "1.0.0",
+      "nd-template": "1.0.0"
     },
     "devDependencies": {
       "expect.js": "0.3.1"
