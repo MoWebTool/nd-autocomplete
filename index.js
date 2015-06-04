@@ -1,5 +1,5 @@
 /**
- * @module: nd-autocomplete
+ * @module: Autocomplete
  * @author: balaixianren <huixiang0922@gmail.com> - 2015-04-17 15:00:40
  */
 
@@ -274,7 +274,7 @@ var AutoComplete = Overlay.extend({
     // 初始化下拉的状态
     this.items = this.$('[data-role="items"]').children();
 
-    if (this.get('selectFirst')) {
+    if (this.items.length && this.get('selectFirst')) {
       this.set('selectedIndex', 0);
     }
 
