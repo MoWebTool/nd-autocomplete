@@ -77,6 +77,7 @@ var AutoComplete = Overlay.extend({
   Implements: [Template],
 
   attrs: {
+    zIndex: 999,
     // 触发元素
     trigger: null,
     classPrefix: 'ui-select',
@@ -383,7 +384,7 @@ var AutoComplete = Overlay.extend({
         silent: true
       });
 
-      this.items.eq(index).addClass(hoverClass);
+      this.currItem = this.items.eq(index).addClass(hoverClass);
     }
   },
 
