@@ -196,6 +196,8 @@ var AutoComplete = Overlay.extend({
       // scroll current item into view
       this.currItem.get(0).scrollIntoView(false);
     });
+
+    this.after('show', this._setElementWidth);
   },
 
   show: function() {
@@ -447,6 +449,12 @@ var AutoComplete = Overlay.extend({
     var align = this.get('align');
     align.baseElement = this.get('trigger');
     this.set('align', align);
+  },
+
+  // trigger 的宽度和浮层保持一致
+  _setElementWidth: function() {
+    this.element.css('width', $(this.get('trigger')).outerWidth());
+    this.off('after:show');
   }
 
 });
