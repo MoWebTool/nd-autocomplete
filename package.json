@@ -20,10 +20,12 @@
   "spm": {
     "main": "index.js",
     "dependencies": {
+      "handlebars-runtime": "3.0.1",
       "jquery": "1.11.1",
-      "nd-base": "0.0.1",
       "nd-overlay": "1.0.0",
-      "nd-template": "1.0.0"
+      "nd-spinner": "1.0.0",
+      "nd-template": "1.0.0",
+      "nd-widget": "1.0.0"
     },
     "devDependencies": {
       "expect.js": "0.3.1"

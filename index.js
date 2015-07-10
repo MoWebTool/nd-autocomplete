@@ -1,6 +1,6 @@
 /**
- * @module: Autocomplete
- * @author: balaixianren <huixiang0922@gmail.com> - 2015-04-17 15:00:40
+ * @module AutoComplete
+ * @author balaixianren <huixiang0922@gmail.com>
  */
 
 'use strict';
@@ -8,6 +8,7 @@
 var $ = require('jquery');
 var Overlay = require('nd-overlay');
 var Template = require('nd-template');
+var Spinner = require('nd-spinner');
 
 var Filter = require('./src/filter');
 var Input = require('./src/input');
@@ -104,7 +105,6 @@ var AutoComplete = Overlay.extend({
     filter: null,
     disabled: false,
     selectFirst: false,
-    delay: 100,
     // 以下为模板相关
     model: {},
     template: require('./src/element.handlebars'),
@@ -121,11 +121,11 @@ var AutoComplete = Overlay.extend({
               v = label || this.label || '',
               h = '';
 
-            if ($.isArray(index)) {
+            if (Array.isArray(index)) {
               for (var i = 0, l = index.length; i < l; i++) {
                 var j = index[i],
                   start, length;
-                if ($.isArray(j)) {
+                if (Array.isArray(j)) {
                   start = j[0];
                   length = j[1] - j[0];
                 } else {
@@ -164,17 +164,17 @@ var AutoComplete = Overlay.extend({
   },
 
   events: {
-    'click [data-role=item]': '_handleSelection',
-    'mousedown [data-role=items]': '_handleMouseDown',
-    'mouseenter [data-role=item]': '_handleMouseMove',
-    'mouseleave [data-role=item]': '_handleMouseMove'
+    'click [data-role="item"]': '_handleSelection',
+    'mousedown [data-role="items"]': '_handleMouseDown',
+    'mouseenter [data-role="item"]': '_handleMouseMove',
+    'mouseleave [data-role="item"]': '_handleMouseMove'
   },
 
   parseElement: function() {
     var that = this;
     this.templatePartials || (this.templatePartials = {});
 
-    $.each(['header', 'footer', 'html'], function(index, item) {
+    ['header', 'footer', 'html'].forEach(function(item) {
       that.templatePartials[item] = that.get(item);
     });
 
@@ -186,9 +186,10 @@ var AutoComplete = Overlay.extend({
 
     this._isOpen = false;
     this._initInput(); // 初始化输入框
+    this._initSpinner();
     this._initFilter(); // 初始化过滤器
     this._bindHandle(); // 绑定事件
-    this._blurHide([$(this.get('trigger'))]);
+    this._blurHide([this.get('trigger')]);
     this._tweakAlignDefaultValue();
 
     this.on('indexChanged', function(index) {
@@ -305,8 +306,14 @@ var AutoComplete = Overlay.extend({
   // ------------
   _initInput: function() {
     this.input = new Input({
-      element: this.get('trigger'),
-      delay: this.get('delay')
+      element: this.get('trigger')
+    });
+  },
+
+  _initSpinner: function() {
+    this.spinner = new Spinner({
+      reference: this.get('trigger'),
+      alignment: 'middleright'
     });
   },
 
@@ -404,7 +411,9 @@ var AutoComplete = Overlay.extend({
       return;
     }
 
+    this.spinner.show();
     this.get('dataSource')(val, function(data) {
+      this.spinner.hide();
       this.trigger('data', data);
     }.bind(this));
   },

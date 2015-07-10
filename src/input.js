@@ -1,7 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
-var Base = require('nd-base');
+var Widget = require('nd-widget');
 
 var specialKeyCodeMap = {
   9: 'tab',
@@ -12,12 +12,6 @@ var specialKeyCodeMap = {
   38: 'up',
   40: 'down'
 };
-
-function wrapFn(fn, context) {
-  return function() {
-    fn.apply(context, arguments);
-  };
-}
 
 function compare(a, b) {
   a = (a || '').replace(/^\s*/g, '').replace(/\s{2,}/g, ' ');
@@ -30,7 +24,7 @@ function ucFirst(str) {
   return str.charAt(0).toUpperCase() + str.substring(1);
 }
 
-var Input = Base.extend({
+var Input = Widget.extend({
 
   attrs: {
     element: {
@@ -39,43 +33,34 @@ var Input = Base.extend({
         return $(val);
       }
     },
-    query: null,
-    delay: 100
+    query: null
   },
 
-  initialize: function() {
-    Input.superclass.initialize.apply(this, arguments);
+  events: {
+    focus: '_handleFocus',
+    blur: '_handleBlur',
+    keydown: '_handleKeydown',
+    input: '_change'
+  },
 
-    // bind events
-    this._bindEvents();
+  setup: function() {
+    this.element.attr('autocomplete', 'off');
 
     // init query
     this.set('query', this.getValue());
   },
 
   focus: function() {
-    this.get('element').focus();
+    this.element.focus();
   },
 
   getValue: function() {
-    return this.get('element').val();
+    return this.element.val();
   },
 
   setValue: function(val, silent) {
-    this.get('element').val(val);
+    this.element.val(val);
     silent || this._change();
-  },
-
-  destroy: function() {
-    Input.superclass.destroy.call(this);
-  },
-
-  _bindEvents: function() {
-    this.get('element').attr('autocomplete', 'off')
-      .on('focus.autocomplete', wrapFn(this._handleFocus, this))
-      .on('blur.autocomplete', wrapFn(this._handleBlur, this))
-      .on('keydown.autocomplete', wrapFn(this._handleKeydown, this))
-      .on('input.autocomplete', wrapFn(this._change, this));
   },
 
   _change: function() {
