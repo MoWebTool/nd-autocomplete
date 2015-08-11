@@ -104,7 +104,7 @@ var AutoComplete = Overlay.extend({
     // 输出过滤
     filter: null,
     disabled: false,
-    selectFirst: false,
+    selectFirst: true,
     // 以下为模板相关
     model: {},
     template: require('./src/element.handlebars'),
@@ -345,7 +345,8 @@ var AutoComplete = Overlay.extend({
     this.on('data', this._filterData, this);
 
     this.input
-      .on('blur', this.hide, this)
+      // .on('blur', this.hide, this)
+      .on('blur', this._handleBlur, this)
       .on('focus', this._handleFocus, this)
       .on('keyEnter', this._handleSelection, this)
       .on('keyEsc', this.hide, this)
@@ -395,6 +396,10 @@ var AutoComplete = Overlay.extend({
 
       this.trigger('itemSelected', data, item);
     }
+  },
+
+  _handleBlur: function() {
+    this._handleSelection();
   },
 
   _handleFocus: function() {
