@@ -160,7 +160,10 @@ var AutoComplete = Overlay.extend({
     },
     // 以下仅为组件使用
     selectedIndex: null,
-    data: []
+    data: [],
+    outFilter: function(data) {
+      return data.value;
+    }
   },
 
   events: {
@@ -185,6 +188,7 @@ var AutoComplete = Overlay.extend({
     AutoComplete.superclass.setup.call(this);
 
     this._isOpen = false;
+    this._initTrigger();
     this._initInput(); // 初始化输入框
     this._initSpinner();
     this._initFilter(); // 初始化过滤器
@@ -229,6 +233,11 @@ var AutoComplete = Overlay.extend({
       this.input = null;
     }
 
+    if (this.spinner) {
+      this.spinner.destroy();
+      this.spinner = null;
+    }
+
     AutoComplete.superclass.destroy.call(this);
   },
 
@@ -243,10 +252,6 @@ var AutoComplete = Overlay.extend({
 
       this._handleSelection();
     }
-  },
-
-  setInputValue: function(val) {
-    this.input.setValue(val);
   },
 
   // Private Methods
@@ -284,6 +289,13 @@ var AutoComplete = Overlay.extend({
 
     // 选中后会修改 input 的值并触发下一次渲染，但第二次渲染的结果不应该显示出来。
     this._isOpen && this.show();
+
+    // 默认
+    if (!data.length) {
+      this.get('field').val(this.get('outFilter')({
+        value: this.input.getValue()
+      }));
+    }
   },
 
   // 键盘控制上下移动
@@ -304,6 +316,12 @@ var AutoComplete = Overlay.extend({
 
   // 初始化
   // ------------
+  _initTrigger: function() {
+    var trigger = this.get('trigger');
+    this.set('field', trigger.attr('type', 'hidden'));
+    this.set('trigger', $('<input type="text" class="' + trigger.attr('class') + '" />').insertBefore(trigger));
+  },
+
   _initInput: function() {
     this.input = new Input({
       element: this.get('trigger')
@@ -363,7 +381,7 @@ var AutoComplete = Overlay.extend({
     var data = this.get('data')[index];
 
     if (index >= 0 && item && data) {
-      this.input.setValue(data.target);
+      this.input.setValue(data.target, true);
       this.set('selectedIndex', index, {
         silent: true
       });
@@ -372,6 +390,8 @@ var AutoComplete = Overlay.extend({
       if (e && !isMouse && !this.get('submitOnEnter')) {
         e.preventDefault();
       }
+
+      this.get('field').val(this.get('outFilter')(data));
 
       this.trigger('itemSelected', data, item);
     }
