@@ -260,11 +260,18 @@ var AutoComplete = Overlay.extend({
   // 数据源返回，过滤数据
   _filterData: function(data) {
     // 进行过滤
-    this.set('data',
-      this.get('filter').call(
-        this, normalize(data), this.input.get('query')
-      )
+    data = this.get('filter').call(
+      this, normalize(data), this.input.get('query')
     );
+
+    this.set('data', data);
+
+    // 默认
+    if (!data.length) {
+      this.get('field').val(this.get('outFilter')({
+        value: this.input.getValue()
+      }));
+    }
   },
 
   // 通过数据渲染模板
@@ -289,13 +296,6 @@ var AutoComplete = Overlay.extend({
 
     // 选中后会修改 input 的值并触发下一次渲染，但第二次渲染的结果不应该显示出来。
     this._isOpen && this.show();
-
-    // 默认
-    if (!data.length) {
-      this.get('field').val(this.get('outFilter')({
-        value: this.input.getValue()
-      }));
-    }
   },
 
   // 键盘控制上下移动
