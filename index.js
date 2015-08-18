@@ -318,8 +318,8 @@ var AutoComplete = Overlay.extend({
   // ------------
   _initTrigger: function() {
     var trigger = this.get('trigger');
-    this.set('field', trigger.attr('type', 'hidden'));
-    this.set('trigger', $('<input type="text" class="' + trigger.attr('class') + '" placeholder="'+trigger.attr('placeholder')+'" />').insertBefore(trigger));
+    this.set('trigger', $('<input type="text" class="' + trigger.attr('class') + '" placeholder="' + trigger.attr('placeholder') + '" />').insertBefore(trigger));
+    this.set('field', trigger.removeAttr('placeholder').attr('type', 'hidden'));
   },
 
   _initInput: function() {
