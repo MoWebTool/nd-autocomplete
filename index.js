@@ -321,7 +321,8 @@ var AutoComplete = Overlay.extend({
     this.set('trigger', $('<input type="text" />').attr({
       'class': trigger.attr('class'),
       'placeholder': trigger.attr('placeholder'),
-      'size': trigger.attr('size')
+      'size': trigger.attr('size'),
+      'value': trigger.attr('value')
     }).insertBefore(trigger));
     this.set('originalTrigger', trigger.removeAttr('placeholder').attr('type', 'hidden'));
   },
