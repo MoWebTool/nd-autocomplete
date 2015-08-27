@@ -54,7 +54,10 @@ var Filter = {
 
     data.forEach(function(item) {
       var a, matchKeys = [item.value].concat(item.alias);
-
+      matchKeys=matchKeys.filter(function(item){
+        return item;
+      });
+      
       // 匹配 value 和 alias 中的
       while ((a = matchKeys.shift())) {
         if (reg.test(a)) {
@@ -87,6 +90,9 @@ var Filter = {
 
     data.forEach(function(item) {
       var a, matchKeys = [item.value].concat(item.alias);
+      matchKeys=matchKeys.filter(function(item){
+        return item;
+      });
 
       // 匹配 value 和 alias 中的
       while ((a = matchKeys.shift())) {
