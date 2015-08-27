@@ -46,7 +46,7 @@ var Filter = {
 
     var result = [],
       l = query.length,
-      reg = new RegExp('^' + escapeKeyword(query));
+      reg = new RegExp('^' + escapeKeyword(query),'i');
 
     if (!l) {
       return [];
@@ -57,7 +57,7 @@ var Filter = {
       matchKeys=matchKeys.filter(function(item){
         return item;
       });
-      
+
       // 匹配 value 和 alias 中的
       while ((a = matchKeys.shift())) {
         if (reg.test(a)) {
