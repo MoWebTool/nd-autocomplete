@@ -1,3 +1,8 @@
+/**
+ * @module AutoComplete
+ * @author balaixianren <huixiang0922@gmail.com>
+ */
+
 'use strict';
 
 // 转义正则关键字
@@ -46,7 +51,7 @@ var Filter = {
 
     var result = [],
       l = query.length,
-      reg = new RegExp('^' + escapeKeyword(query),'i');
+      reg = new RegExp('^' + escapeKeyword(query), 'i');
 
     if (!l) {
       return [];
@@ -54,7 +59,7 @@ var Filter = {
 
     data.forEach(function(item) {
       var a, matchKeys = [item.value].concat(item.alias);
-      matchKeys=matchKeys.filter(function(item){
+      matchKeys = matchKeys.filter(function(item) {
         return item;
       });
 
@@ -90,7 +95,7 @@ var Filter = {
 
     data.forEach(function(item) {
       var a, matchKeys = [item.value].concat(item.alias);
-      matchKeys=matchKeys.filter(function(item){
+      matchKeys = matchKeys.filter(function(item) {
         return item;
       });
 

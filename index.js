@@ -77,6 +77,10 @@ var AutoComplete = Overlay.extend({
 
   Implements: [Template],
 
+  templatePartials: {
+    element: require('./src/partial.handlebars')
+  },
+
   attrs: {
     zIndex: 999,
     // 触发元素
@@ -108,56 +112,6 @@ var AutoComplete = Overlay.extend({
     // 以下为模板相关
     model: {},
     template: require('./src/element.handlebars'),
-    partial: function(data) {
-      var template = require('./src/partial.handlebars');
-
-      return template(data, {
-        helpers: {
-          // 将匹配的高亮文字加上 hl 的样式
-          highlightItem: function(label) {
-            var index = this.highlightIndex,
-              classPrefix = this.parent ? this.parent.classPrefix : '',
-              cursor = 0,
-              v = label || this.label || '',
-              h = '';
-
-            if (Array.isArray(index)) {
-              for (var i = 0, l = index.length; i < l; i++) {
-                var j = index[i],
-                  start, length;
-                if (Array.isArray(j)) {
-                  start = j[0];
-                  length = j[1] - j[0];
-                } else {
-                  start = j;
-                  length = 1;
-                }
-
-                if (start > cursor) {
-                  h += v.substring(cursor, start);
-                }
-                if (start < v.length) {
-                  var className = classPrefix ? ('class="' + classPrefix + '-item-hl"') : '';
-                  h += '<span ' + className + '>' + v.substr(start, length) + '</span>';
-                }
-                cursor = start + length;
-                if (cursor >= v.length) {
-                  break;
-                }
-              }
-              if (v.length > cursor) {
-                h += v.substring(cursor, v.length);
-              }
-              return h;
-            }
-            return v;
-          },
-          include: function(options) {
-            return options.fn($.extend({}, this, options.hash));
-          }
-        }
-      });
-    },
     // 以下仅为组件使用
     selectedIndex: null,
     data: [],
@@ -171,17 +125,6 @@ var AutoComplete = Overlay.extend({
     'mousedown [data-role="items"]': '_handleMouseDown',
     'mouseenter [data-role="item"]': '_handleMouseMove',
     'mouseleave [data-role="item"]': '_handleMouseMove'
-  },
-
-  parseElement: function() {
-    var that = this;
-    this.templatePartials || (this.templatePartials = {});
-
-    ['header', 'footer', 'html'].forEach(function(item) {
-      that.templatePartials[item] = that.get(item);
-    });
-
-    AutoComplete.superclass.parseElement.call(this);
   },
 
   setup: function() {
@@ -278,14 +221,11 @@ var AutoComplete = Overlay.extend({
   _onRenderData: function(data) {
     data || (data = []);
 
-    this.element.html(
-      this.get('partial').call(this, {
-        classPrefix: this.get('classPrefix'),
-        items: data,
-        query: this.input.get('query'),
-        length: data.length
-      })
-    );
+    this.renderPartialTemplate('element', {
+      items: data,
+      query: this.input.get('query'),
+      length: data.length
+    });
 
     // 初始化下拉的状态
     this.items = this.$('[data-role="items"]').children();
@@ -318,12 +258,14 @@ var AutoComplete = Overlay.extend({
   // ------------
   _initTrigger: function() {
     var trigger = this.get('trigger');
+
     this.set('trigger', $('<input type="text" />').attr({
       'class': trigger.attr('class'),
       'placeholder': trigger.attr('placeholder'),
       'size': trigger.attr('size'),
       'value': trigger.attr('value')
     }).insertBefore(trigger));
+
     this.set('originalTrigger', trigger.removeAttr('placeholder').attr('type', 'hidden'));
   },
 

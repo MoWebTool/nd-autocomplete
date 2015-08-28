@@ -1,3 +1,8 @@
+/**
+ * @module AutoComplete
+ * @author balaixianren <huixiang0922@gmail.com>
+ */
+
 'use strict';
 
 var $ = require('jquery');
