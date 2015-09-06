@@ -385,7 +385,7 @@ var AutoComplete = Overlay.extend({
 
     this.spinner.show();
     this.get('dataSource')(val, function(data) {
-      this.spinner.hide();
+      this.spinner&&this.spinner.hide();
       this.trigger('data', data);
     }.bind(this));
   },
