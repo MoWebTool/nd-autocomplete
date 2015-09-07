@@ -13,6 +13,8 @@ var Spinner = require('nd-spinner');
 var Filter = require('./src/filter');
 var Input = require('./src/input');
 
+var i=0;
+
 // 标准格式，不匹配则忽略
 //
 //   {
@@ -384,10 +386,15 @@ var AutoComplete = Overlay.extend({
     }
 
     this.spinner.show();
-    this.get('dataSource')(val, function(data) {
-      this.spinner&&this.spinner.hide();
-      this.trigger('data', data);
-    }.bind(this));
+    i++;
+    this.get('dataSource')(val, (function(ctx, v){
+      return function(data) {
+        if(v===i){
+          ctx.spinner&&ctx.spinner.hide();
+          ctx.trigger('data', data);
+        }
+      };
+    })(this, i));
   },
 
   // 选项上下移动
