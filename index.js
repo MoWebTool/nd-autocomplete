@@ -89,6 +89,8 @@ var AutoComplete = Overlay.extend({
     trigger: null,
     classPrefix: 'ui-select',
     hoverClass: 'ui-select-hover',
+    //严格模式,默认不打开
+    strict: false,
     align: {
       baseXY: [0, '100%-1px']
     },
@@ -212,7 +214,7 @@ var AutoComplete = Overlay.extend({
     this.set('data', data);
 
     // 默认
-    if (!data.length) {
+    if (!data.length && !this.get('strict')) {
       this.get('originalTrigger').val(this.get('outFilter')({
         value: this.input.getValue()
       }));
