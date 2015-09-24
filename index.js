@@ -149,7 +149,10 @@ var AutoComplete = Overlay.extend({
       this.currItem.get(0).scrollIntoView(false);
     });
 
-    this.after('show', this._setElementWidth);
+    this.after('show', function() {
+      this._setElementWidth();
+      this._resetPosition();
+    });
   },
 
   show: function() {
@@ -444,6 +447,25 @@ var AutoComplete = Overlay.extend({
   // trigger 的宽度和浮层保持一致
   _setElementWidth: function() {
     this.element.css('width', $(this.get('trigger')).outerWidth());
+  },
+  
+  _resetPosition: function() {
+    var align = this.get('align');
+    var alignBase = align.baseElement;
+
+    // 默认是展示在 trigger 的下方，
+    // 当 trigger 底部区域不足以显示内容时改为 trigger 上方
+    if (alignBase.offset().top + alignBase.height() + this.element.height() > $(window).height()) {
+      this.set('align', {
+        baseXY: [0, '1px'],
+        selfXY: [0, '100%']
+      });
+    } else {
+      this.set('align', {
+        baseXY: [0, '100%-1px'],
+        selfXY: [0, 0]
+      });
+    }
   }
 
 });
