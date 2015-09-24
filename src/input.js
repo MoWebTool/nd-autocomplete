@@ -38,7 +38,10 @@ var Input = Widget.extend({
         return $(val);
       }
     },
-    query: null
+    query: null,
+    inFilter: function(data) {
+      return data;
+    }
   },
 
   events: {
@@ -60,7 +63,7 @@ var Input = Widget.extend({
   },
 
   getValue: function() {
-    return this.element.val();
+    return this.get('inFilter').call(this, this.element.val());
   },
 
   setValue: function(val, silent) {
