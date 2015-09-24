@@ -119,6 +119,9 @@ var AutoComplete = Overlay.extend({
     // 以下仅为组件使用
     selectedIndex: null,
     data: [],
+    inFilter: function(data) {
+      return data;
+    },
     outFilter: function(data) {
       return data.value;
     }
@@ -278,7 +281,8 @@ var AutoComplete = Overlay.extend({
 
   _initInput: function() {
     this.input = new Input({
-      element: this.get('trigger')
+      element: this.get('trigger')，
+      inFilter: this.get('inFilter')
     });
   },
 
