@@ -281,7 +281,7 @@ var AutoComplete = Overlay.extend({
 
   _initInput: function() {
     this.input = new Input({
-      element: this.get('trigger')，
+      element: this.get('trigger'),
       inFilter: this.get('inFilter')
     });
   },
