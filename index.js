@@ -90,7 +90,9 @@ var AutoComplete = Overlay.extend({
     classPrefix: 'ui-select',
     hoverClass: 'ui-select-hover',
     //严格模式,默认不打开
-    strict: false,
+    // strict: false,
+    //重新定义严格模式，mode: 0 不打开; mode: 1 无匹配结果提交''; mode: 2 无匹配结果不提交
+    mode: 0,
     align: {
       baseXY: [0, '100%-1px']
     },
@@ -119,9 +121,6 @@ var AutoComplete = Overlay.extend({
     // 以下仅为组件使用
     selectedIndex: null,
     data: [],
-    inFilter: function(data) {
-      return data;
-    },
     outFilter: function(data) {
       return data.value;
     }
@@ -152,10 +151,7 @@ var AutoComplete = Overlay.extend({
       this.currItem.get(0).scrollIntoView(false);
     });
 
-    this.after('show', function() {
-      this._setElementWidth();
-      this._resetPosition();
-    });
+    this.after('show', this._setElementWidth);
   },
 
   show: function() {
@@ -219,8 +215,14 @@ var AutoComplete = Overlay.extend({
 
     this.set('data', data);
 
-    // 默认
-    if (!data.length && !this.get('strict')) {
+    // 默认 mode: 0
+    if (!data.length && this.get('mode') === 0) {
+      this.get('originalTrigger').val(this.get('outFilter')({
+        value: this.input.getValue()
+      }));
+    }
+    // 提交''
+    if (!data.length && this.get('mode') === 1) {
       this.get('originalTrigger').val(this.get('outFilter')({
         value: this.input.getValue()
       }));
@@ -281,8 +283,7 @@ var AutoComplete = Overlay.extend({
 
   _initInput: function() {
     this.input = new Input({
-      element: this.get('trigger'),
-      inFilter: this.get('inFilter')
+      element: this.get('trigger')
     });
   },
 
@@ -451,25 +452,6 @@ var AutoComplete = Overlay.extend({
   // trigger 的宽度和浮层保持一致
   _setElementWidth: function() {
     this.element.css('width', $(this.get('trigger')).outerWidth());
-  },
-  
-  _resetPosition: function() {
-    var align = this.get('align');
-    var alignBase = align.baseElement;
-
-    // 默认是展示在 trigger 的下方，
-    // 当 trigger 底部区域不足以显示内容时改为 trigger 上方
-    if (alignBase.offset().top + alignBase.height() + this.element.height() > $(window).height()) {
-      this.set('align', {
-        baseXY: [0, '1px'],
-        selfXY: [0, '100%']
-      });
-    } else {
-      this.set('align', {
-        baseXY: [0, '100%-1px'],
-        selfXY: [0, 0]
-      });
-    }
   }
 
 });
