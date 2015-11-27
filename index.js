@@ -224,7 +224,7 @@ var AutoComplete = Overlay.extend({
     // 提交''
     if (!data.length && this.get('mode') === 1) {
       this.get('originalTrigger').val(this.get('outFilter')({
-        value: this.input.getValue()
+        value: ''
       }));
     }
   },
