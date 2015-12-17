@@ -39,6 +39,7 @@ var Input = Widget.extend({
       }
     },
     query: null,
+    queryOnFocus: false,
     inFilter: function(data) {
       return data;
     }
@@ -71,7 +72,7 @@ var Input = Widget.extend({
     silent || this._change();
   },
 
-  _change: function() {
+  _change: function(force) {
     var newVal = this.getValue();
     var oldVal = this.get('query');
     var isSame = compare(oldVal, newVal);
@@ -81,7 +82,7 @@ var Input = Widget.extend({
       this.trigger('whitespaceChanged', oldVal);
     }
 
-    if (!isSame) {
+    if (force || !isSame) {
       this.set('query', newVal);
       this.trigger('queryChanged', newVal, oldVal);
     }
@@ -89,6 +90,10 @@ var Input = Widget.extend({
 
   _handleFocus: function(e) {
     this.trigger('focus', e);
+
+    if (this.get('queryOnFocus')) {
+      this._change(true);
+    }
   },
 
   _handleBlur: function(e) {
