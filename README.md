@@ -1,13 +1,15 @@
 # nd-autocomplete
 
-[![spm version](http://spm.crossjs.com/badge/nd-autocomplete)](http://spm.crossjs.com/package/nd-autocomplete)
+[![Travis](https://img.shields.io/travis/ndfront/nd-autocomplete.svg?style=flat-square)](https://github.com/ndfront/nd-autocomplete)
+[![Coveralls](https://img.shields.io/coveralls/ndfront/nd-autocomplete.svg?style=flat-square)](https://github.com/ndfront/nd-autocomplete)
+[![NPM version](https://img.shields.io/npm/v/nd-autocomplete.svg?style=flat-square)](https://npmjs.org/package/nd-autocomplete)
 
 > 自动补全组件
 
 ## 安装
 
 ```bash
-$ spm install nd-autocomplete --save
+$ npm install nd-autocomplete --save
 ```
 
 ## 使用
