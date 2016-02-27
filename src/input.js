@@ -5,7 +5,7 @@
 
 'use strict';
 
-var $ = require('jquery');
+var $ = require('nd-jquery');
 var Widget = require('nd-widget');
 
 var specialKeyCodeMap = {

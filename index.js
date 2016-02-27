@@ -5,7 +5,7 @@
 
 'use strict';
 
-var $ = require('jquery');
+var $ = require('nd-jquery');
 var Overlay = require('nd-overlay');
 var Template = require('nd-template');
 var Spinner = require('nd-spinner');

@@ -1,6 +1,6 @@
 {
   "name": "nd-autocomplete",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "自动补全组件",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-autocomplete",
@@ -23,11 +23,11 @@
   "main": "index.js",
   "dependencies": {
     "handlebars": "^4.0.5",
-    "jquery": "^1.11.1",
-    "nd-overlay": "^3.0.0",
+    "nd-overlay": "^3.0.1",
     "nd-spinner": "^3.0.0",
-    "nd-template": "^3.0.0",
-    "nd-widget": "^3.0.0"
+    "nd-template": "^3.0.1",
+    "nd-widget": "^3.0.1",
+    "nd-jquery": "^2.2.1"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
