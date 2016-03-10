@@ -3,65 +3,65 @@
  * @author balaixianren <huixiang0922@gmail.com>
  */
 
-'use strict';
+'use strict'
 
 // 转义正则关键字
-var keyword = /(\[|\[|\]|\^|\$|\||\(|\)|\{|\}|\+|\*|\?|\\)/g;
+var keyword = /(\[|\[|\]|\^|\$|\||\(|\)|\{|\}|\+|\*|\?|\\)/g
 
 function escapeKeyword(str) {
-  return (str || '').replace(keyword, '\\$1');
+  return (str || '').replace(keyword, '\\$1')
 }
 
 function stringMatch(matchKey, query) {
   var r = [],
-    a = matchKey.split('');
+    a = matchKey.split('')
 
   var queryIndex = 0,
-    q = query.split('');
+    q = query.split('')
 
   for (var i = 0, l = a.length; i < l; i++) {
-    var v = a[i];
+    var v = a[i]
 
     if (v === q[queryIndex]) {
       if (queryIndex === q.length - 1) {
-        r.push([i - q.length + 1, i + 1]);
-        queryIndex = 0;
+        r.push([i - q.length + 1, i + 1])
+        queryIndex = 0
 
-        continue;
+        continue
       }
 
-      queryIndex++;
+      queryIndex++
     } else {
-      queryIndex = 0;
+      queryIndex = 0
     }
   }
 
-  return r;
+  return r
 }
 
 
 var Filter = {
 
   'default': function(data) {
-    return data;
+    return data
   },
 
   'startsWith': function(data, query) {
-    query || (query = '');
+    query || (query = '')
 
     var result = [],
       l = query.length,
-      reg = new RegExp('^' + escapeKeyword(query), 'i');
+      reg = new RegExp('^' + escapeKeyword(query), 'i')
 
     if (!l) {
-      return [];
+      return []
     }
 
     data.forEach(function(item) {
-      var a, matchKeys = [item.value].concat(item.alias);
+      var a, matchKeys = [item.value].concat(item.alias)
       matchKeys = matchKeys.filter(function(item) {
-        return item;
-      });
+        return item
+      })
 
       // 匹配 value 和 alias 中的
       while ((a = matchKeys.shift())) {
@@ -70,52 +70,52 @@ var Filter = {
           if (item.label === a) {
             item.highlightIndex = [
               [0, l]
-            ];
+            ]
           }
 
-          result.push(item);
-          break;
+          result.push(item)
+          break
         }
       }
-    });
+    })
 
-    return result;
+    return result
   },
 
 
   'stringMatch': function(data, query) {
-    query || (query = '');
+    query || (query = '')
 
     var result = [],
-      l = query.length;
+      l = query.length
 
     if (!l) {
-      return [];
+      return []
     }
 
     data.forEach(function(item) {
-      var a, matchKeys = [item.value].concat(item.alias);
+      var a, matchKeys = [item.value].concat(item.alias)
       matchKeys = matchKeys.filter(function(item) {
-        return item;
-      });
+        return item
+      })
 
       // 匹配 value 和 alias 中的
       while ((a = matchKeys.shift())) {
         if (a.indexOf(query) > -1) {
           // 匹配和显示相同才有必要高亮
           if (item.label === a) {
-            item.highlightIndex = stringMatch(a, query);
+            item.highlightIndex = stringMatch(a, query)
           }
 
-          result.push(item);
-          break;
+          result.push(item)
+          break
         }
       }
-    });
+    })
 
-    return result;
+    return result
   }
 
-};
+}
 
-module.exports = Filter;
+module.exports = Filter

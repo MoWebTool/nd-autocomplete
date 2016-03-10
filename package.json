@@ -1,6 +1,6 @@
 {
   "name": "nd-autocomplete",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "自动补全组件",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-autocomplete",
@@ -9,8 +9,11 @@
     "email": "huixiang0922@gmail.com"
   },
   "scripts": {
-    "test": "mocha --bail --timeout 200 --slow 99999 tests/**/*-spec.js",
-    "coverage": "node_modules/isparta/bin/isparta cover node_modules/mocha/bin/_mocha -- --bail --timeout 200 --slow 99999 -R dot tests/**/*-spec.js"
+    "prepublish": "npm run lint && npm run test",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "node ./node_modules/karma/bin/karma start ./karma.conf.js",
+    "test:dev": "npm run test -- --watch"
   },
   "repository": {
     "type": "git",
@@ -26,12 +29,27 @@
     "nd-overlay": "^3.0.1",
     "nd-spinner": "^3.0.0",
     "nd-template": "^3.0.1",
-    "nd-widget": "^3.0.1",
-    "nd-jquery": "^2.2.1"
+    "nd-widget": "^3.0.2",
+    "nd-jquery": "^2.2.2"
   },
   "devDependencies": {
-    "expect.js": "^0.3.1",
-    "isparta": "^4.0.0",
-    "mocha": "^2.4.5"
+    "chai": "^3.5.0",
+    "handlebars-loader": "^1.1.4",
+    "isparta-loader": "^2.0.0",
+    "karma": "^0.13.8",
+    "karma-coverage": "^0.5.0",
+    "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.2.2",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.4.5",
+    "phantomjs-polyfill": "0.0.1",
+    "phantomjs-prebuilt": "^2.1.3",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0",
+    "superagent-mock": "^1.10.0",
+    "webpack": "^1.12.14",
+    "yargs": "^4.2.0"
   }
 }

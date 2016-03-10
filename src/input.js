@@ -3,10 +3,10 @@
  * @author balaixianren <huixiang0922@gmail.com>
  */
 
-'use strict';
+'use strict'
 
-var $ = require('nd-jquery');
-var Widget = require('nd-widget');
+var $ = require('nd-jquery')
+var Widget = require('nd-widget')
 
 var specialKeyCodeMap = {
   9: 'tab',
@@ -16,17 +16,17 @@ var specialKeyCodeMap = {
   13: 'enter',
   38: 'up',
   40: 'down'
-};
+}
 
 function compare(a, b) {
-  a = (a || '').replace(/^\s*/g, '').replace(/\s{2,}/g, ' ');
-  b = (b || '').replace(/^\s*/g, '').replace(/\s{2,}/g, ' ');
+  a = (a || '').replace(/^\s*/g, '').replace(/\s{2,}/g, ' ')
+  b = (b || '').replace(/^\s*/g, '').replace(/\s{2,}/g, ' ')
 
-  return a === b;
+  return a === b
 }
 
 function ucFirst(str) {
-  return str.charAt(0).toUpperCase() + str.substring(1);
+  return str.charAt(0).toUpperCase() + str.substring(1)
 }
 
 var Input = Widget.extend({
@@ -35,13 +35,13 @@ var Input = Widget.extend({
     element: {
       value: null,
       setter: function(val) {
-        return $(val);
+        return $(val)
       }
     },
     query: null,
     queryOnFocus: false,
     inFilter: function(data) {
-      return data;
+      return data
     }
   },
 
@@ -53,60 +53,60 @@ var Input = Widget.extend({
   },
 
   setup: function() {
-    this.element.attr('autocomplete', 'off');
+    this.element.attr('autocomplete', 'off')
 
     // init query
-    this.set('query', this.getValue());
+    this.set('query', this.getValue())
   },
 
   focus: function() {
-    this.element.focus();
+    this.element.focus()
   },
 
   getValue: function() {
-    return this.get('inFilter').call(this, this.element.val());
+    return this.get('inFilter').call(this, this.element.val())
   },
 
   setValue: function(val, silent) {
-    this.element.val(val);
-    silent || this._change();
+    this.element.val(val)
+    silent || this._change()
   },
 
   _change: function(force) {
-    var newVal = this.getValue();
-    var oldVal = this.get('query');
-    var isSame = compare(oldVal, newVal);
-    var isSameExpectWhitespace = isSame ? (newVal.length !== oldVal.length) : false;
+    var newVal = this.getValue()
+    var oldVal = this.get('query')
+    var isSame = compare(oldVal, newVal)
+    var isSameExpectWhitespace = isSame ? (newVal.length !== oldVal.length) : false
 
     if (isSameExpectWhitespace) {
-      this.trigger('whitespaceChanged', oldVal);
+      this.trigger('whitespaceChanged', oldVal)
     }
 
     if (force || !isSame) {
-      this.set('query', newVal);
-      this.trigger('queryChanged', newVal, oldVal);
+      this.set('query', newVal)
+      this.trigger('queryChanged', newVal, oldVal)
     }
   },
 
   _handleFocus: function(e) {
-    this.trigger('focus', e);
+    this.trigger('focus', e)
 
     if (this.get('queryOnFocus')) {
-      this._change(true);
+      this._change(true)
     }
   },
 
   _handleBlur: function(e) {
-    this.trigger('blur', e);
+    this.trigger('blur', e)
   },
 
   _handleKeydown: function(e) {
-    var keyName = specialKeyCodeMap[e.which];
+    var keyName = specialKeyCodeMap[e.which]
 
     if (keyName) {
-      this.trigger(e.type = 'key' + ucFirst(keyName), e);
+      this.trigger(e.type = 'key' + ucFirst(keyName), e)
     }
   }
-});
+})
 
-module.exports = Input;
+module.exports = Input
