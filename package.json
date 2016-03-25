@@ -1,6 +1,6 @@
 {
   "name": "nd-autocomplete",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "自动补全组件",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-autocomplete",
@@ -9,7 +9,7 @@
     "email": "huixiang0922@gmail.com"
   },
   "scripts": {
-    "prepublish": "npm run lint && npm run test",
+    "prepublish": "npm run lint",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "node ./node_modules/karma/bin/karma start ./karma.conf.js",

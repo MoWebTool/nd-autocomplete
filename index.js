@@ -89,7 +89,7 @@ var AutoComplete = Overlay.extend({
     trigger: null,
     classPrefix: 'ui-select',
     hoverClass: 'ui-select-hover',
-    //严格模式,默认不打开
+    // 严格模式，开启则必须从联想值中选择，默认不打开
     strict: false,
     align: {
       baseXY: [0, '100%-1px']
@@ -98,7 +98,7 @@ var AutoComplete = Overlay.extend({
     queryOnFocus: false,
     // 回车是否会提交表单
     submitOnEnter: false,
-    //数据源，1.x版本简化为仅支持 Function
+    // 数据源，1.x 版本简化为仅支持 Function
     dataSource: {
       value: null,
       getter: function(val) {
@@ -222,8 +222,10 @@ var AutoComplete = Overlay.extend({
     this.set('data', data)
 
     // 默认
-    if (!data.length && !this.get('strict')) {
-      this.get('originalTrigger').val(this.get('outFilter')({
+    if (!data.length) {
+      // 严格模式，清空值
+      // 非严格模式，直接将输入值返回
+      this.get('originalTrigger').val(this.get('strict') ? '' : this.get('outFilter')({
         value: this.input.getValue()
       }))
     }

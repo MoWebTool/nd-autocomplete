@@ -17,4 +17,12 @@ $ npm install nd-autocomplete --save
 ```js
 var AutoComplete = require('nd-autocomplete');
 // use AutoComplete
+new AutoComplete({
+  trigger: 'input[name="user_id"]',
+  dataSource: function(keyword, callback){
+    // do some query
+    callbak([...])
+  },
+  strict: true
+}).render()
 ```
