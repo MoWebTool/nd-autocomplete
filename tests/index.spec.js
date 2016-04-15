@@ -1,6 +1,6 @@
 'use strict'
 
-// var $ = require('nd-jquery')
+var $ = require('nd-jquery')
 var chai = require('chai')
 var sinonChai = require('sinon-chai')
 var AutoComplete = require('../index')
@@ -16,7 +16,9 @@ describe('AutoComplete', function() {
 
   it('new AutoComplete', function() {
     expect(AutoComplete).to.be.a('function')
-    expect(new AutoComplete).to.be.a('object')
+    expect(new AutoComplete({
+      trigger: $('<input/>')
+    })).to.be.a('object')
   })
 
 })

@@ -43,6 +43,12 @@ module.exports = function(config) {
         loaders: [{
           test: /\.handlebars$/,
           loader: 'handlebars'
+        }, {
+          test: /\.html$/,
+          loader: 'html'
+        }, {
+          test: /\.gif$/,
+          loader: 'url?limit=8192'
         }]
       },
     },
