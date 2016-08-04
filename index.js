@@ -220,15 +220,6 @@ var AutoComplete = Overlay.extend({
     )
 
     this.set('data', data)
-
-    // 默认
-    if (!data.length) {
-      // 严格模式，清空值
-      // 非严格模式，直接将输入值返回
-      this.get('originalTrigger').val(this.get('strict') ? '' : this.get('outFilter')({
-        value: this.input.getValue()
-      }))
-    }
   },
 
   // 通过数据渲染模板
@@ -337,12 +328,27 @@ var AutoComplete = Overlay.extend({
     })
   },
 
+  /*
+
+    // 默认
+    if (!data.length) {
+      // 严格模式，清空值
+      // 非严格模式，直接将输入值返回
+      this.get('originalTrigger').val(this.get('strict') ? '' : this.get('outFilter')({
+        value: this.input.getValue()
+      }))
+    }
+  */
+
   // 选中的处理器
   // 1. 鼠标点击触发
   // 2. 回车触发
   // 3. selectItem 触发
   _handleSelection: function(e) {
     if (!this.items) {
+      this.get('originalTrigger').val(this.get('strict') ? '' : this.get('outFilter')({
+        value: this.input.getValue()
+      }))
       return
     }
 
@@ -365,6 +371,10 @@ var AutoComplete = Overlay.extend({
       this.get('originalTrigger').val(this.get('outFilter')(data))
 
       this.trigger('itemSelected', data, item)
+    } else {
+      this.get('originalTrigger').val(this.get('strict') ? '' : this.get('outFilter')({
+        value: this.input.getValue()
+      }))
     }
   },
 
