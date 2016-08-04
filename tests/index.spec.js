@@ -11,7 +11,8 @@ var expect = chai.expect
 
 chai.use(sinonChai)
 
-/*globals describe,it*/
+/* eslint-disable */
+/*globals describe,it,beforeEach,afterEach*/
 Filter.test = function () {
   return []
 }
@@ -236,8 +237,8 @@ describe('AutoComplete', function() {
       filter: 'stringMatch',
       dataSource: function(query, callback) {
         callback(['abc', 'abd', 'bca', {
-          value: 'ÌìºëÔöÀû±¦»õ±Ò 000198 TIANHONGZENGLIBAO',
-          label: 'ÌìºëÔöÀû±¦»õ±Ò 000198',
+          value: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 000198 TIANHONGZENGLIBAO',
+          label: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 000198',
           target: '000198'
         }])
       }
@@ -246,7 +247,7 @@ describe('AutoComplete', function() {
     ac.input.setValue('TIAN')
     ac.set('selectedIndex', 0)
     ac.selectItem()
-    expect(input.val()).to.equal('ÌìºëÔöÀû±¦»õ±Ò 000198 TIANHONGZENGLIBAO')
+    expect(input.val()).to.equal('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 000198 TIANHONGZENGLIBAO')
     expect(ac.input.getValue()).to.equal('000198')
   })
 
